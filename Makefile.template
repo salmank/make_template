@@ -1,0 +1,21 @@
+BINNAME=__BINNAME__
+OBJDIR=build/obj
+BINDIR=build/bin
+SRCDIR=src
+CXXFLAGS += -O2 -std=c++14
+BINS=$(BINDIR)/$(BINNAME)
+
+all: $(BINS)
+
+directories:
+	
+clean:
+	rm $(BINDIR)/* $(OBJDIR)/*
+
+$(OBJDIR)/%.o : $(SRCDIR)/%.cc
+	mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(BINDIR)/% : $(OBJDIR)/%.o
+	mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $^ -o $@
