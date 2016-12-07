@@ -1,3 +1,5 @@
-int main(int argc, char** argv) {
-  return 0;
+#include "gtest/gtest.h"
+
+TEST(__BINNAME__Test, Test) {
+  EXPECT_EQ(1,1);
 }

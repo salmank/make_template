@@ -5,10 +5,16 @@ SRCDIR=src
 CXXFLAGS += -O2 -std=c++14
 BINS=$(BINDIR)/$(BINNAME)
 
-all: $(BINS)
+GTEST_DIR=/Users/salmankhan1/googletest/googletest
+GTEST_LIB=$(GTEST_DIR)/make/gtest_main.a
+CPPFLAGS += -isystem $(GTEST_DIR)/include
+TESTSRCDIR=test
+TESTBINDIR=build/test
+TESTOBJDIR=build/obj
+TESTBINS=$(TESTBINDIR)/$(BINNAME)_test
 
-directories:
-	
+all: $(BINS) $(TESTBINS)
+
 clean:
 	rm $(BINDIR)/* $(OBJDIR)/*
 
@@ -19,3 +25,12 @@ $(OBJDIR)/%.o : $(SRCDIR)/%.cc
 $(BINDIR)/% : $(OBJDIR)/%.o
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $^ -o $@
+
+
+$(TESTOBJDIR)/%.o : $(TESTSRCDIR)/%.cc
+	mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+
+$(TESTBINDIR)/% : $(TESTOBJDIR)/%.o $(GTEST_LIB)
+	mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
