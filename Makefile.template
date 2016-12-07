@@ -21,7 +21,7 @@ run_tests:
 clean:
 	rm $(BINDIR)/* $(OBJDIR)/*
 
-$(OBJDIR)/%.o : $(SRCDIR)/%.cc
+$(OBJDIR)/%.o : $(SRCDIR)/%.cc $(SRCDIR)/%.hh
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
@@ -30,7 +30,7 @@ $(BINDIR)/% : $(OBJDIR)/%.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 
-$(TESTOBJDIR)/%.o : $(TESTSRCDIR)/%.cc
+$(TESTOBJDIR)/%.o : $(TESTSRCDIR)/%.cc $(SRCDIR)/*
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 

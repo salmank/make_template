@@ -18,5 +18,5 @@ fi
 /bin/cp ${SOURCE_PATH}/gitignore_template ${PATH}/.gitignore
 cd ${PATH}
 /usr/bin/git init
-/usr/bin/git add Makefile src/*.cc test/*.cc .gitignore
+/usr/bin/git add Makefile src/*.cc src/*.hh test/*.cc .gitignore
 /usr/bin/git commit -m "Initial commit for ${PROJNAME}"
