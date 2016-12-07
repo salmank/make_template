@@ -13,7 +13,10 @@ TESTBINDIR=build/test
 TESTOBJDIR=build/obj
 TESTBINS=$(TESTBINDIR)/$(BINNAME)_test
 
-all: $(BINS) $(TESTBINS)
+all: $(BINS) $(TESTBINS) run_tests
+
+run_tests:
+	$(TESTBINS)
 
 clean:
 	rm $(BINDIR)/* $(OBJDIR)/*
