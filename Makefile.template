@@ -6,8 +6,10 @@ CXXFLAGS += -O2 -std=c++14
 BINS=$(BINDIR)/$(BINNAME)
 
 GTEST_DIR=/Users/salmankhan1/googletest/googletest
+GMOCK_DIR=/Users/salmankhan1/googletest/googlemock
 GTEST_LIB=$(GTEST_DIR)/make/gtest_main.a
-CPPFLAGS += -isystem $(GTEST_DIR)/include
+GMOCK_LIB=$(GMOCK_DIR)/make/gmock_main.a
+CPPFLAGS += -isystem $(GTEST_DIR)/include -isystem $(GMOCK_DIR)/include
 TESTSRCDIR=test
 TESTBINDIR=build/test
 TESTOBJDIR=build/obj
@@ -30,10 +32,10 @@ $(BINDIR)/% : $(OBJDIR)/%.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 
-$(TESTOBJDIR)/%.o : $(TESTSRCDIR)/%.cc $(SRCDIR)/*
+$(TESTOBJDIR)/%.o : $(TESTSRCDIR)/%.cc $(SRCDIR)/* $(TESTSRCDIR)/*.hh
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-$(TESTBINDIR)/% : $(TESTOBJDIR)/%.o $(GTEST_LIB)
+$(TESTBINDIR)/% : $(TESTOBJDIR)/%.o $(GTEST_LIB) $(GMOCK_LIB)
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
