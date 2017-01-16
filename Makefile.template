@@ -23,11 +23,11 @@ run_tests:
 clean:
 	rm $(BINDIR)/* $(OBJDIR)/*
 
-$(OBJDIR)/%.o : $(SRCDIR)/%.cc $(SRCDIR)/%.hh
+$(OBJDIR)/%.o : $(SRCDIR)/%.cc $(SRCDIR)/*.hh
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(BINDIR)/% : $(OBJDIR)/%.o
+$(BINDIR)/% : $(OBJDIR)/%_main.o $(OBJDIR)/%.o
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
@@ -36,6 +36,6 @@ $(TESTOBJDIR)/%.o : $(TESTSRCDIR)/%.cc $(SRCDIR)/* $(TESTSRCDIR)/*.hh
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-$(TESTBINDIR)/% : $(TESTOBJDIR)/%.o $(GTEST_LIB) $(GMOCK_LIB)
+$(TESTBINDIR)/% : $(TESTOBJDIR)/%.o $(OBJDIR)/__BINNAME__.o $(GTEST_LIB) $(GMOCK_LIB)
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
