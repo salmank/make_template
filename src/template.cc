@@ -1,5 +1,10 @@
 #include "__BINNAME__.hh"
 
-int main(int argc, char** argv) {
-  return 0;
-}
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <map>
+#include <cassert>
+
